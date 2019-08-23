@@ -54,4 +54,32 @@ class ConfigGeneratorTest extends TestCase
         ], 10);
         $this->assertStringContainsString($expected, $result);
     }
+
+    public function testGenerateIncludesFunctions()
+    {
+        $result = ConfigGenerator::generate();
+        $expected = Yaml::dump([
+            'functions' => [
+                'website' => [
+                    'handler' => 'public/index.php',
+                    'timeout' => 30,
+                    'layers' => ['${bref:layer.php-73-fpm}'],
+                    'events' => [
+                        ['http' => 'ANY /'],
+                        ['http' => 'ANY /{proxy+}']
+                    ]
+                ],
+                'artisan' => [
+                    'handler' => 'artisan',
+                    'timeout' => 120,
+                    'layers' => [
+                        '${bref:layer.php-73}',
+                        '${bref:layer.console}',
+                    ],
+                    'events' => []
+                ],
+            ],
+        ], 10);
+        $this->assertStringContainsString($expected, $result);
+    }
 }

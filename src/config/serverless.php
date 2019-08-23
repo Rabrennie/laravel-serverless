@@ -8,5 +8,14 @@ return [
     ],
     'environment' => [
         'APP_STORAGE' => '/tmp'
+    ],
+    'package' => [
+        'exclude' => [
+            'node_modules/**',
+            'public/js/**',
+            'public/css/**',
+            'resources/js/**',
+            'resources/sass/**',
+        ]
     ]
 ];

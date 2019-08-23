@@ -16,5 +16,20 @@ class ServerlessConfig
         $this->service = config('app.name');
         $this->provider = new ProviderConfig();
         $this->package = new PackageConfig();
+        $this->functions = [
+            'website' => new FunctionConfig(
+                'public/index.php',
+                30,
+                ['${bref:layer.php-73-fpm}'],
+                [
+                    ['http' => 'ANY /'],
+                    ['http' => 'ANY /{proxy+}']
+                ]
+            ),
+            'artisan' => new FunctionConfig('artisan', 120, [
+                '${bref:layer.php-73}',
+                '${bref:layer.console}'
+            ])
+        ];
     }
 }
