@@ -4,23 +4,17 @@ namespace LaravelServerless\Generator;
 
 class ProviderConfig
 {
-    public $name;
+    public $name = 'aws';
     public $region;
     public $stage;
     public $runtime = 'provided';
-    public $environment = ['APP_STORAGE' => '/tmp'];
-    public $iamRoleStatements = [
-        [
-            'Effect' => 'Allow',
-            'Action' => ['something'],
-            'Resource' => ['something']
-        ]
-    ];
+    public $environment;
+    public $iamRoleStatements;
 
-    public function __construct(String $name = 'aws', String $region = 'eu-west-1', String $stage = 'dev')
+    public function __construct()
     {
-        $this->name = $name;
-        $this->region = $region;
-        $this->stage = $stage;
+        $this->region = config('serverless.aws.region');
+        $this->stage = config('app.env');
+        $this->environment = config('serverless.environment');
     }
 }

@@ -15,5 +15,4 @@ class ServerlessServiceProvider extends ServiceProvider
     {
         $this->commands($this->commands);
     }
-
 }
