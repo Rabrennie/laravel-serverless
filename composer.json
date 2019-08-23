@@ -9,5 +9,20 @@
             "email": "rab@rabrennie.com"
         }
     ],
-    "require": {}
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "^8.3"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "autoload": {
+        "psr-4": {
+            "Rabrennie\\LaravelServerless\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Rabrennie\\LaravelServerless\\Test\\": "tests"
+        }
+    }
 }
