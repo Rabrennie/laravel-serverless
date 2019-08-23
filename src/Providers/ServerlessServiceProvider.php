@@ -7,7 +7,9 @@ use LaravelServerless\Console\Commands\ServerlessDeployCommand;
 
 class ServerlessServiceProvider extends ServiceProvider
 {
-    protected $commands = [];
+    protected $commands = [
+        ServerlessDeployCommand::class
+    ];
 
     public function register()
     {
