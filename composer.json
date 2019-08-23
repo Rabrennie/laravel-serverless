@@ -1,0 +1,13 @@
+{
+    "name": "rabrennie/laravel-serverless",
+    "description": "Serverless laravel",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Rab",
+            "email": "rab@rabrennie.com"
+        }
+    ],
+    "require": {}
+}
