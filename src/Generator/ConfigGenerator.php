@@ -9,8 +9,7 @@ class ConfigGenerator
 {
     public static function generate()
     {
-        $name = config('app.name');
-        $serverlessConfig = new ServerlessConfig($name, new ProviderConfig());
+        $serverlessConfig = new ServerlessConfig();
         $yaml = Yaml::dump(json_decode(json_encode((array)$serverlessConfig), true), 10);
         return $yaml;
     }

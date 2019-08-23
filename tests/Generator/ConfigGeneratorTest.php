@@ -40,7 +40,18 @@ class ConfigGeneratorTest extends TestCase
                 ],
                 'iamRoleStatements' => null
             ]
-            ], 10);
+        ], 10);
+        $this->assertStringContainsString($expected, $result);
+    }
+
+    public function testGenerateIncludesPackage()
+    {
+        $result = ConfigGenerator::generate();
+        $expected = Yaml::dump([
+            'package' => [
+                'exclude' => ['node_modules'],
+            ]
+        ], 10);
         $this->assertStringContainsString($expected, $result);
     }
 }

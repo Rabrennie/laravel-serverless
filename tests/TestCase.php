@@ -28,5 +28,8 @@ class TestCase extends OrchestraTestCase
         $app['config']->set('serverless.environment', [
             'APP_STORAGE' => '/tmp'
         ]);
+        $app['config']->set('serverless.package', [
+            'exclude' => ['node_modules']
+        ]);
     }
 }

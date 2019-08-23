@@ -11,9 +11,10 @@ class ServerlessConfig
     public $functions;
     public $resources;
 
-    public function __construct(String $name, ProviderConfig $provider)
+    public function __construct()
     {
-        $this->service = $name;
-        $this->provider = $provider;
+        $this->service = config('app.name');
+        $this->provider = new ProviderConfig();
+        $this->package = new PackageConfig();
     }
 }
