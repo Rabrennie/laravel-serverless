@@ -7,12 +7,19 @@ use LaravelServerless\Console\Commands\ServerlessDeployCommand;
 
 class ServerlessServiceProvider extends ServiceProvider
 {
-    protected $commands = [
-        ServerlessDeployCommand::class
-    ];
+    public function boot()
+    {
+        $this->publishes([
+            __DIR__.'../config/serverless.php' => config_path('serverless.php'),
+        ]);
+    }
 
     public function register()
     {
-        $this->commands($this->commands);
+        $this->mergeConfigFrom(__DIR__.'/../config/serverless.php', 'serverless');
+
+        $this->commands([
+            ServerlessDeployCommand::class
+        ]);
     }
 }
