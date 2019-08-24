@@ -16,7 +16,7 @@ class PackageApp extends DeploymentStep
             mkdir($storagePath);
         }
 
-        $zipLocation = strtolower(config('app.name')) . '.zip';
+        $zipLocation = $storagePath . strtolower(config('app.name')) . '.zip';
         if (file_exists($zipLocation)) {
             unlink($zipLocation);
         }
