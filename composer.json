@@ -29,5 +29,12 @@
         "psr-4": {
             "LaravelServerless\\Test\\": "tests"
         }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "LaravelServerless\\Providers\\ServerlessServiceProvider"
+            ]
+        }
     }
 }
