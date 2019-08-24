@@ -10,13 +10,13 @@ class ServerlessServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__.'../config/serverless.php' => config_path('serverless.php'),
+            __DIR__.'../../config/serverless.php' => config_path('serverless.php'),
         ]);
     }
 
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__.'/../config/serverless.php', 'serverless');
+        $this->mergeConfigFrom(__DIR__.'/../../config/serverless.php', 'serverless');
 
         $this->commands([
             ServerlessDeployCommand::class
