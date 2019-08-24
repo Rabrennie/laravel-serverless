@@ -31,5 +31,6 @@ class ServerlessConfig
                 '${bref:layer.console}'
             ])
         ];
+        $this->resources = new ResourcesConfig();
     }
 }
