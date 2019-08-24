@@ -71,7 +71,7 @@ class ResourcesConfig
                     ],
                     'ViewerProtocolPolicy' => 'redirect-to-https'
                 ],
-                'CacheBehaviors' => [
+                'CacheBehaviors' => [[
                     'TargetOriginId' => 'Assets',
                     'AllowedMethods' => ['GET', 'HEAD'],
                     'PathPattern' => 'assets/*',
@@ -81,7 +81,7 @@ class ResourcesConfig
                     ],
                     'ViewerProtocolPolicy' => 'redirect-to-https',
                     'Compress' => true
-                ],
+                ]],
                 'CustomErrorResponses' => [
                     [
                         'ErrorCode' => 500,
