@@ -8,8 +8,8 @@ class ResourcesConfig
 
     public function __construct()
     {
-        $serviceName = strtolower(config('app.env'));
-        $stage = strtolower(config('serverless.environment'));
+        $serviceName = strtolower(config('app.name'));
+        $stage = strtolower(config('app.env'));
 
         $assets = new ResourceConfig('AWS::S3::Bucket', [
             'BucketName' => "{$serviceName}-client-{$stage}",
