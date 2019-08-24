@@ -30,7 +30,7 @@ class ResourcesConfig
                     'Principal' => '*',
                     'Action' => 's3:GetObject',
                     'Resource' => [
-                        'Fn::Join:' => [
+                        'Fn::Join' => [
                             '',
                             [
                                 'arn:aws:s3:::',
