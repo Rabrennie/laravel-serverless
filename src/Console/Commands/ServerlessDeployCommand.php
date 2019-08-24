@@ -24,8 +24,7 @@ class ServerlessDeployCommand extends Command
 
     public function handle()
     {
-        $config = ConfigGenerator::generate();
-        file_put_contents($this->getConfigPath(), $config);
+        $this->storeConfig();
 
         $result = $this->deploy();
         $this->info($result);
@@ -36,21 +35,21 @@ class ServerlessDeployCommand extends Command
         return "{$this->storagePath}/serverless.yml";
     }
 
-    public function getPackagePath()
-    {
-        return "{$this->storagePath}/.serverless/";
-    }
-
     public function getRelativePath($path)
     {
         return './' . str_replace(base_path(), '', $path);
+    }
+
+    public function storeConfig()
+    {
+        $config = ConfigGenerator::generate();
+        file_put_contents($this->getConfigPath(), $config);
     }
 
     public function deploy()
     {
         chdir(base_path());
         $configPath = $this->getRelativePath($this->getConfigPath());
-        $packagePath = $this->getRelativePath($this->getPackagePath());
-        return shell_exec("serverless deploy --config {$configPath} --package {$packagePath}");
+        return shell_exec("serverless deploy --config {$configPath}");
     }
 }
