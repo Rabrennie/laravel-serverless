@@ -63,20 +63,11 @@ class ConfigGeneratorTest extends TestCase
                 'website' => [
                     'handler' => 'public/index.php',
                     'timeout' => 30,
-                    'layers' => ['${bref:layer.php-73-fpm}'],
+                    'layers' => ['arn:aws:lambda:eu-west-1:209497400698:layer:php-73-fpm:10'],
                     'events' => [
                         ['http' => 'ANY /'],
                         ['http' => 'ANY /{proxy+}']
                     ]
-                ],
-                'artisan' => [
-                    'handler' => 'artisan',
-                    'timeout' => 120,
-                    'layers' => [
-                        '${bref:layer.php-73}',
-                        '${bref:layer.console}',
-                    ],
-                    'events' => []
                 ],
             ],
         ], 10);

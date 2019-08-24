@@ -20,17 +20,14 @@ class ServerlessConfig
             'website' => new FunctionConfig(
                 'public/index.php',
                 30,
-                ['${bref:layer.php-73-fpm}'],
+                ['arn:aws:lambda:eu-west-1:209497400698:layer:php-73-fpm:10'],
                 [
                     ['http' => 'ANY /'],
                     ['http' => 'ANY /{proxy+}']
                 ]
             ),
-            'artisan' => new FunctionConfig('artisan', 120, [
-                '${bref:layer.php-73}',
-                '${bref:layer.console}'
-            ])
         ];
+
         $this->resources = new ResourcesConfig();
     }
 }
