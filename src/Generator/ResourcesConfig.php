@@ -51,7 +51,17 @@ class ResourcesConfig
                 'Origins' => [
                     [
                         'Id' => 'Website',
-                        'DomainName' => '#{ApiGatewayRestApi}.execute-api.#{AWS::Region}.amazonaws.com',
+                        'DomainName' => [
+                            'Fn::Join' => [
+                                '',
+                                [
+                                    ['Ref' => 'ApiGatewayRestApi'],
+                                    '.execute-api.',
+                                    ['Ref' => 'AWS::Region'],
+                                    '.amazonaws.com',
+                                ]
+                            ]
+                        ],
                         'OriginPath' => "/{$stage}",
                         'CustomOriginConfig' => [
                             'OriginProtocolPolicy' => 'https-only'
@@ -59,7 +69,15 @@ class ResourcesConfig
                     ],
                     [
                         'Id' => 'Assets',
-                        'DomainName' => '#{Assets}.s3.amazonaws.com',
+                        'DomainName' => [
+                            'Fn::Join' => [
+                                '',
+                                [
+                                    ['Ref' => 'Assets'],
+                                    '.s3.amazonaws.com'
+                                ]
+                            ]
+                        ],
                         'CustomOriginConfig' => [
                             'OriginProtocolPolicy' => 'https-only'
                         ]
