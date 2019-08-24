@@ -13,8 +13,8 @@ class ProviderConfig
 
     public function __construct()
     {
-        $this->region = config('serverless.aws.region');
+        $this->region = strtolower(config('serverless.aws.region'));
         $this->stage = strtolower(config('app.env'));
-        $this->environment = config('serverless.environment');
+        $this->environment = strtolower(config('serverless.environment'));
     }
 }
