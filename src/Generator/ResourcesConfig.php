@@ -29,7 +29,16 @@ class ResourcesConfig
                     'Effect' => 'Allow',
                     'Principal' => '*',
                     'Action' => 's3:GetObject',
-                    'Resource' => "arn:aws:s3:::{$assets->Properties['BucketName']}/*"
+                    'Resource' => [
+                        'Fn::Join:' => [
+                            '',
+                            [
+                                'arn:aws:s3:::',
+                                ['Ref' => 'Assets'],
+                                '/*'
+                            ]
+                        ]
+                    ]
                 ]]
             ]
         ]);
