@@ -20,7 +20,7 @@ class ServerlessConfig
             'website' => new FunctionConfig(
                 'public/index.php',
                 30,
-                ['arn:aws:lambda:eu-west-1:209497400698:layer:php-73-fpm:10'],
+                ["arn:aws:lambda:{$this->provider->region}:209497400698:layer:php-73-fpm:10"],
                 [
                     ['http' => 'ANY /'],
                     ['http' => 'ANY /{proxy+}']
