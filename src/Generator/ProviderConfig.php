@@ -15,6 +15,6 @@ class ProviderConfig
     {
         $this->region = strtolower(config('serverless.aws.region'));
         $this->stage = strtolower(config('app.env'));
-        $this->environment = strtolower(config('serverless.environment'));
+        $this->environment = config('serverless.environment');
     }
 }
