@@ -3,7 +3,6 @@
 namespace LaravelServerless\Deployment;
 
 use Aws\Exception\AwsException;
-use Aws\S3\S3Client;
 use Exception;
 
 class CreateDeploymentBucket extends DeploymentStep

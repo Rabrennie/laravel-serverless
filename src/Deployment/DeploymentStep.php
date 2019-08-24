@@ -2,6 +2,8 @@
 
 namespace LaravelServerless\Deployment;
 
+use Aws\S3\S3Client;
+
 abstract class DeploymentStep
 {
     protected $executionTime;
@@ -13,7 +15,7 @@ abstract class DeploymentStep
 
     abstract public function execute() : string;
 
-    protected function getS3Client()
+    protected function getS3Client() : S3Client
     {
         return new S3Client([
             'version' => '2006-03-01',
@@ -25,7 +27,7 @@ abstract class DeploymentStep
         ]);
     }
 
-    protected function getDeploymentBucketName()
+    protected function getDeploymentBucketName() : string
     {
         $appName = config('app.name');
         $appEnv = config('app.env');
