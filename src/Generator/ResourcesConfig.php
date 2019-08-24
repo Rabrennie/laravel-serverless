@@ -8,8 +8,11 @@ class ResourcesConfig
 
     public function __construct()
     {
+        $serviceName = strtolower(config('app.env'));
+        $stage = strtolower(config('serverless.environment'));
+
         $assets = new ResourceConfig('AWS::S3::Bucket', [
-            'BucketName' => '${self:service}-client-${self:provider.stage}',
+            'BucketName' => "{$serviceName}-client-{$stage}",
             'CorsConfiguration' => [
                 'CorsRules' => [[
                     'AllowedHeaders' => ['*'],
@@ -40,7 +43,7 @@ class ResourcesConfig
                     [
                         'Id' => 'Website',
                         'DomainName' => '#{ApiGatewayRestApi}.execute-api.#{AWS::Region}.amazonaws.com',
-                        'OriginPath' => '/${self:provider.stage}',
+                        'OriginPath' => "/{$stage}",
                         'CustomOriginConfig' => [
                             'OriginProtocolPolicy' => 'https-only'
                         ]
@@ -96,7 +99,7 @@ class ResourcesConfig
         ]);
 
         $sessionsTable = new ResourceConfig('AWS::DynamoDB::Table', [
-            'TableName' => '${self:service}-sessions-${self:provider.stage}',
+            'TableName' => "{$serviceName}-sessions-{$stage}",
             'AttributeDefinitions' => [
                 [
                     'AttributeName' => 'id',
