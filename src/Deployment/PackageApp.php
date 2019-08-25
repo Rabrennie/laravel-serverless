@@ -54,6 +54,8 @@ class PackageApp extends DeploymentStep
 
         $zip->close();
 
+        $this->state->set('packagedAppLocation', realpath($zipLocation));
+
         return 'Successfully packaged app.';
     }
 }
