@@ -11,21 +11,9 @@ use LaravelServerless\Generator\TemplateGenerator;
 
 class CreateCloudformationStack extends DeploymentStep
 {
-    /** @var CloudFormationClient */
-    private $cloudformationClient;
-
     public function execute() : string
     {
         $template = TemplateGenerator::generate();
-
-        $this->cloudformationClient = new CloudFormationClient([
-            'version' => '2010-05-15',
-            'region' => config('serverless.aws.region'),
-            'credentials' => [
-                'key' => config('serverless.aws.key'),
-                'secret' => config('serverless.aws.secret')
-            ]
-        ]);
 
         $stackName = 'testing-stack';
         
@@ -38,7 +26,7 @@ class CreateCloudformationStack extends DeploymentStep
             $status = $this->getStackStatus($stackName);
         };
 
-        $result = $this->cloudformationClient->describeStackResource([
+        $result = $this->getCloudFormationClient()->describeStackResource([
             'StackName' => 'testing-stack',
             'LogicalResourceId' => 'DeploymentBucket'
         ]);
@@ -52,7 +40,7 @@ class CreateCloudformationStack extends DeploymentStep
     public function stackExists($stackName)
     {
         try {
-            $this->cloudformationClient->describeStacks([
+            $this->getCloudFormationClient()->describeStacks([
                 'StackName' => $stackName
             ]);
         } catch (CloudFormationException $e) {
@@ -65,7 +53,7 @@ class CreateCloudformationStack extends DeploymentStep
     public function validateTemplate($template)
     {
         try {
-            $this->cloudformationClient->validateTemplate([
+            $this->getCloudFormationClient()->validateTemplate([
                 'TemplateBody' => json_encode($template)
             ]);
         } catch (CloudFormationException $e) {
@@ -77,12 +65,12 @@ class CreateCloudformationStack extends DeploymentStep
     {
         try {
             if ($this->stackExists($stackName)) {
-                $this->cloudformationClient->updateStack([
+                $this->getCloudFormationClient()->updateStack([
                     'StackName' => $stackName,
                     'TemplateBody' => json_encode($template)
                 ]);
             } else {
-                $this->cloudformationClient->createStack([
+                $this->getCloudFormationClient()->createStack([
                     'StackName' => $stackName,
                     'TemplateBody' => json_encode($template)
                 ]);
@@ -100,7 +88,7 @@ class CreateCloudformationStack extends DeploymentStep
     public function getStackStatus($stackName)
     {
         /** @var Result */
-        $result = $this->cloudformationClient->describeStacks([
+        $result = $this->getCloudFormationClient()->describeStacks([
             'StackName' => $stackName
         ]);
 
