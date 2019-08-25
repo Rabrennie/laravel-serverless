@@ -66,11 +66,13 @@ class CreateCloudformationStack extends DeploymentStep
         try {
             if ($this->stackExists($stackName)) {
                 $this->getCloudFormationClient()->updateStack([
+                    'Capabilities' => ['CAPABILITY_NAMED_IAM'],
                     'StackName' => $stackName,
                     'TemplateBody' => json_encode($template)
                 ]);
             } else {
                 $this->getCloudFormationClient()->createStack([
+                    'Capabilities' => ['CAPABILITY_NAMED_IAM'],
                     'StackName' => $stackName,
                     'TemplateBody' => json_encode($template)
                 ]);

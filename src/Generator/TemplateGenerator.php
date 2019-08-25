@@ -13,7 +13,8 @@ class TemplateGenerator
             'Description' => 'Serverless AWS CloudFormation template',
             'Resources' => [
                 'DeploymentBucket' => new DeploymentBucketResourceTemplate(),
-                'WebsiteLogGroup' => new WebsiteLogGroupTemplate()
+                'WebsiteLogGroup' => new WebsiteLogGroupTemplate(),
+                'LambdaExecutionIamRole' => new LambdaExecutionIamRoleTemplate()
             ]
         ];
         
