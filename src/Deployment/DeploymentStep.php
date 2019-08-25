@@ -41,12 +41,4 @@ abstract class DeploymentStep
     {
         $this->s3Client = $s3Client;
     }
-
-    protected function getDeploymentBucketName() : string
-    {
-        $appName = config('app.name');
-        $appEnv = config('app.env');
-
-        return strtolower(str_replace(' ', '-', "{$appName}-{$appEnv}-deployment-{$this->executionTime}"));
-    }
 }

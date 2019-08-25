@@ -3,7 +3,11 @@
 namespace LaravelServerless\Console\Commands;
 
 use Illuminate\Console\Command;
-use LaravelServerless\Generator\ConfigGenerator;
+use LaravelServerless\Deployment\CreateCloudformationStack;
+use LaravelServerless\Deployment\DeploymentState;
+use LaravelServerless\Deployment\DeploymentStep;
+use LaravelServerless\Deployment\PackageApp;
+use LaravelServerless\Deployment\UploadPackagedApp;
 
 class ServerlessDeployCommand extends Command
 {
@@ -12,44 +16,28 @@ class ServerlessDeployCommand extends Command
     protected $description = 'Deploys service to remote serverless service.';
     protected $storagePath;
 
-    public function __construct()
-    {
-        parent::__construct();
-
-        $this->storagePath = storage_path("laravel-serverless/");
-        if (!file_exists($this->storagePath)) {
-            mkdir($this->storagePath);
-        }
-    }
+    protected $steps = [
+        PackageApp::class,
+        CreateCloudformationStack::class,
+        UploadPackagedApp::class
+    ];
 
     public function handle()
     {
-        $this->storeConfig();
+        $deploymentState = new DeploymentState();
+        $deploymentState->set('executionTime', time());
 
-        $result = $this->deploy();
-        $this->info($result);
-    }
-
-    public function getConfigPath()
-    {
-        return "{$this->storagePath}/serverless.yml";
-    }
-
-    public function getRelativePath($path)
-    {
-        return './' . str_replace(base_path(), '', $path);
-    }
-
-    public function storeConfig()
-    {
-        $config = ConfigGenerator::generate();
-        file_put_contents($this->getConfigPath(), $config);
-    }
-
-    public function deploy()
-    {
-        chdir(base_path());
-        $configPath = $this->getRelativePath($this->getConfigPath());
-        return shell_exec("serverless deploy --config {$configPath}");
+        foreach ($this->steps as $stepClass) {
+            /** @var DeploymentStep $class */
+            $step = new $stepClass($deploymentState);
+            try {
+                $result = $step->execute();
+                $this->info($result);
+            } catch (Exception $e) {
+                echo $e->getMessage();
+                $this->error($e->getMessage());
+            }
+            echo json_encode($deploymentState, JSON_PRETTY_PRINT) . "\n";
+        }
     }
 }

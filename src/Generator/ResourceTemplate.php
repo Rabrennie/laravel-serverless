@@ -2,7 +2,7 @@
 
 namespace LaravelServerless\Generator;
 
-class ResourceConfig
+class ResourceTemplate
 {
     public $Type;
     public $Properties;
