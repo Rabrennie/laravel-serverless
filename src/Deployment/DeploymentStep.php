@@ -8,12 +8,16 @@ abstract class DeploymentStep
 {
     protected $executionTime;
 
+    /** @var DeploymentState */
+    protected $state;
+
     /** @var S3Client */
     protected $s3Client;
 
-    public function __construct($executionTime)
+    public function __construct(DeploymentState $state)
     {
-        $this->executionTime = $executionTime;
+        $this->executionTime = $state->get('executionTime');
+        $this->state = $state;
     }
 
     abstract public function execute() : string;
