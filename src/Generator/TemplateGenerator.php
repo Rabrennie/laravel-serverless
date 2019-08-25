@@ -2,11 +2,12 @@
 
 namespace LaravelServerless\Generator;
 
+use LaravelServerless\Deployment\DeploymentState;
 use LaravelServerless\Generator\DeploymentBucketResourceTemplate;
 
 class TemplateGenerator
 {
-    public static function generate()
+    public static function generate(DeploymentState $state)
     {
         $template = [
             'AWSTemplateFormatVersion' => '2010-09-09',
@@ -14,7 +15,8 @@ class TemplateGenerator
             'Resources' => [
                 'DeploymentBucket' => new DeploymentBucketResourceTemplate(),
                 'WebsiteLogGroup' => new WebsiteLogGroupTemplate(),
-                'LambdaExecutionIamRole' => new LambdaExecutionIamRoleTemplate()
+                'LambdaExecutionIamRole' => new LambdaExecutionIamRoleTemplate(),
+                'WebsiteLambdaFunction' => new WebsiteLambdaFunctionTemplate($state)
             ]
         ];
         

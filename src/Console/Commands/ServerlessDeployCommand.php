@@ -4,6 +4,7 @@ namespace LaravelServerless\Console\Commands;
 
 use Illuminate\Console\Command;
 use LaravelServerless\Deployment\CreateCloudformationStack;
+use LaravelServerless\Deployment\CreateDeploymentBucket;
 use LaravelServerless\Deployment\DeploymentState;
 use LaravelServerless\Deployment\DeploymentStep;
 use LaravelServerless\Deployment\PackageApp;
@@ -18,8 +19,9 @@ class ServerlessDeployCommand extends Command
 
     protected $steps = [
         PackageApp::class,
+        CreateDeploymentBucket::class,
+        UploadPackagedApp::class,
         CreateCloudformationStack::class,
-        UploadPackagedApp::class
     ];
 
     public function handle()
